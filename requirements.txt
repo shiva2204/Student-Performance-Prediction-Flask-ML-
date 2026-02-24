@@ -1,0 +1,27 @@
+import pandas as pd
+import pickle
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# 1. Dataset setup
+data = {
+    'study_time': [2, 4, 3, 1, 5, 2, 6, 7, 1, 4, 5, 2, 3, 1, 8],
+    'absences': [2, 0, 1, 5, 0, 10, 2, 1, 8, 3, 0, 5, 2, 7, 0],
+    'prev_score': [70, 85, 78, 60, 90, 65, 92, 95, 55, 82, 88, 62, 75, 50, 98],
+    'final_grade': [72, 88, 80, 58, 94, 60, 95, 98, 50, 85, 90, 60, 78, 52, 100]
+}
+df = pd.DataFrame(data)
+
+# 2. Split Features & Target
+X = df[['study_time', 'absences', 'prev_score']]
+y = df['final_grade']
+
+# 3. Train Model
+model = LinearRegression()
+model.fit(X, y)
+
+# 4. Save Model to a file
+with open('student_model.pkl', 'wb') as f:
+    pickle.dump(model, f)
+
+print("✅ Model trained and saved as 'student_model.pkl'")
